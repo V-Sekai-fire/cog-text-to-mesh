@@ -39,7 +39,7 @@ gradio_app = gr.Interface(
         gr.Slider(minimum=0, maximum=1, value=0, label="Temperature (0 to 1)")
     ],
     outputs=gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Model"),
-    title="MeshGPT Inference - (Rending doesn't work, please download for best result)",
+    title="MeshGPT Inference - (Rendering doesn't work, please download for best result)",
 )
 
 if __name__ == "__main__":
