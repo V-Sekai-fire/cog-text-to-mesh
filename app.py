@@ -24,7 +24,7 @@ def predict(text, num_input, num_temp):
     output = []
     current_time = time.time() 
     formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(current_time))
-    print(formatted_time, " Input:", text, "num_input", num_input, "num_temp",num_temp , "total_generations", total_generations)
+    print(formatted_time, " Input:", text, "num_input", num_input, "num_temp",num_temp)
     if num_input > 1:
         for label in labels:
             output.append((transformer.generate(texts = [label ] * num_input, temperature = num_temp)))   
