@@ -26,7 +26,7 @@ def predict(text, num_input, num_temp):
         for label in labels:
             output.append((transformer.generate(texts = [label ] * num_input, temperature = num_temp)))   
     else:
-        output.append((transformer.generate(texts = [labels ] , temperature = num_temp)))   
+        output.append((transformer.generate(texts = labels  , temperature = num_temp)))   
             
     mesh_render.save_rendering('./render.obj', output) 
     return save_as_obj('./render.obj')
