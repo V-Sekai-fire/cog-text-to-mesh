@@ -1,6 +1,5 @@
 from cog import BasePredictor, Input, Path
 import tempfile
-import time
 from meshgpt_pytorch import MeshTransformer, mesh_render
 
 
@@ -20,23 +19,7 @@ class Predictor(BasePredictor):
         """Run a single prediction on the model"""
         self.transformer.eval()
         labels = [label.strip() for label in text.split(",")]
-
         output = []
-        current_time = time.time()
-
-        formatted_time = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.localtime(current_time)
-        )
-        print(
-            formatted_time,
-            " Input:",
-            text,
-            "num_input",
-            num_input,
-            "num_temp",
-            num_temp,
-        )
-
         if num_input > 1:
             for label in labels:
                 output.append(
