@@ -54,7 +54,7 @@ class Predictor(BasePredictor):
             )
         file_name = "./mesh.obj"
         file_path = Path(tempfile.mkdtemp()) / file_name
-        mesh_render.save_rendering(file_path, output)
+        mesh_render.save_rendering(str(file_path), output)
         return file_path
 
 
