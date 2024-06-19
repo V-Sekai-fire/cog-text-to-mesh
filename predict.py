@@ -63,7 +63,7 @@ class Predictor(BasePredictor):
         mesh_render.save_rendering("./render.obj", output)
         file_path = self.save_as_obj("./render.obj")
         
-        with open(file_path, 'r') as file:
+        with open(file_path, 'rb') as file:
             return file.read()
 
 
