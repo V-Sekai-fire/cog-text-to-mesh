@@ -7,6 +7,5 @@ build:
   cuda: "11.5" # Query nvcc --version
   python_packages:
     - "torch==2.3.1"
-    - "libigl==2.5.1"
     - "git+https://github.com/MarcusLoppe/meshgpt-pytorch.git@14126a20626356e9bd2e12dcf1a06872b9fe968d"
 predict: "predict.py:Predictor"

@@ -55,12 +55,6 @@ class Predictor(BasePredictor):
         file_name = "./mesh.obj"
         file_path = Path(tempfile.mkdtemp()) / file_name
         mesh_render.save_rendering(file_path, output)
-        v, f = igl.read_triangle_mesh(file_path)
-        v, f, _, _ = igl.remove_unreferenced(v, f)
-        c, _ = igl.orientable_patches(f)
-        f, _ = igl.orient_outward(v, f, c)
-        igl.write_triangle_mesh(file_path, v, f)
-        file_path = self.save_as_obj(file_path)
         return file_path
 
 
