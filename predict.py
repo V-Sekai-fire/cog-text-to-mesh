@@ -1,9 +1,10 @@
-from cog import BasePredictor, Input, File
-import torch
+from cog import BasePredictor, Input, Path
+import tempfile
 import time
 from meshgpt_pytorch import MeshTransformer, mesh_render
 import igl
 import numpy as np
+
 
 class Predictor(BasePredictor):
     def setup(self):
@@ -18,14 +19,15 @@ class Predictor(BasePredictor):
         c, _ = igl.orientable_patches(f)
         f, _ = igl.orient_outward(v, f, c)
         igl.write_triangle_mesh(file_path, v, f)
-        return file_path
+        output_path = Path(tempfile.mkdtemp()) / file_path
+        return output_path
 
     def predict(
         self,
         text: str = Input(description="Enter labels, separated by commas"),
         num_input: int = Input(description="Number of examples per input", default=1),
         num_temp: float = Input(description="Temperature (0 to 1)", default=0),
-    ) -> str:
+    ) -> Path:
         """Run a single prediction on the model"""
         self.transformer.eval()
         labels = [label.strip() for label in text.split(",")]
@@ -59,12 +61,10 @@ class Predictor(BasePredictor):
             output.append(
                 (self.transformer.generate(texts=labels, temperature=num_temp))
             )
-
-        mesh_render.save_rendering("./render.obj", output)
-        file_path = self.save_as_obj("./render.obj")
-        
-        with open(file_path, 'rb') as file:
-            return file.read()
+        file_name = "./mesh.obj"
+        mesh_render.save_rendering(file_name, output)
+        file_path = self.save_as_obj(file_name)
+        return file_path
 
 
 if __name__ == "__main__":
