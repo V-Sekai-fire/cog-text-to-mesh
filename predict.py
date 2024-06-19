@@ -60,7 +60,7 @@ class Predictor(BasePredictor):
         c, _ = igl.orientable_patches(f)
         f, _ = igl.orient_outward(v, f, c)
         igl.write_triangle_mesh(file_path, v, f)
-        file_path = self.save_as_obj(file_name)
+        file_path = self.save_as_obj(file_path)
         return file_path
 
 
