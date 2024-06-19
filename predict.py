@@ -2,8 +2,6 @@ from cog import BasePredictor, Input, Path
 import tempfile
 import time
 from meshgpt_pytorch import MeshTransformer, mesh_render
-import igl
-import numpy as np
 
 
 class Predictor(BasePredictor):
