@@ -25,7 +25,7 @@ class Predictor(BasePredictor):
         text: str = Input(description="Enter labels, separated by commas"),
         num_input: int = Input(description="Number of examples per input", default=1),
         num_temp: float = Input(description="Temperature (0 to 1)", default=0),
-    ) -> File:
+    ) -> str:
         """Run a single prediction on the model"""
         self.transformer.eval()
         labels = [label.strip() for label in text.split(",")]
@@ -62,9 +62,9 @@ class Predictor(BasePredictor):
 
         mesh_render.save_rendering("./render.obj", output)
         file_path = self.save_as_obj("./render.obj")
+        
         with open(file_path, 'r') as file:
-            return file
-
+            return file.read()
 
 
 if __name__ == "__main__":
