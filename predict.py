@@ -13,15 +13,6 @@ class Predictor(BasePredictor):
             "MarcusLoren/MeshGPT-preview"
         )
 
-    def save_as_obj(self, file_path):
-        v, f = igl.read_triangle_mesh(file_path)
-        v, f, _, _ = igl.remove_unreferenced(v, f)
-        c, _ = igl.orientable_patches(f)
-        f, _ = igl.orient_outward(v, f, c)
-        igl.write_triangle_mesh(file_path, v, f)
-        output_path = Path(tempfile.mkdtemp()) / file_path
-        return output_path
-
     def predict(
         self,
         text: str = Input(description="Enter labels, separated by commas"),
@@ -62,7 +53,13 @@ class Predictor(BasePredictor):
                 (self.transformer.generate(texts=labels, temperature=num_temp))
             )
         file_name = "./mesh.obj"
-        mesh_render.save_rendering(file_name, output)
+        file_path = Path(tempfile.mkdtemp()) / file_name
+        mesh_render.save_rendering(file_path, output)
+        v, f = igl.read_triangle_mesh(file_path)
+        v, f, _, _ = igl.remove_unreferenced(v, f)
+        c, _ = igl.orientable_patches(f)
+        f, _ = igl.orient_outward(v, f, c)
+        igl.write_triangle_mesh(file_path, v, f)
         file_path = self.save_as_obj(file_name)
         return file_path
 
