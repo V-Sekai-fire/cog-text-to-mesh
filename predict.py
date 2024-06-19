@@ -54,10 +54,3 @@ class Predictor(BasePredictor):
         file_path = Path(tempfile.mkdtemp()) / file_name
         mesh_render.save_rendering(str(file_path), output)
         return file_path
-
-
-if __name__ == "__main__":
-    predictor = Predictor()
-    predictor.setup()
-
-    print(predictor.predict("cat", 1, 0.0))
